@@ -3,10 +3,10 @@
 Google Chrome-ի համար փոխությունները երևի branch-ի մեջ կանեմ հետո:
 
 ### Առանց Extension հարուստ խմբագրիչ չկա
-տեղադրել նկարները
+![without Extension](before.png)
 
 ### Տեղադրելուց հետո ավելանում է հարուստ խմբագրիչ
-տեղադրել նկարները
+![installed Extension](after.png)
 
 ## Extension-ի հավաքելու քայլերը ստորև
 Microsoft Edge-ի համար extension սարքելու համար ահագին գրված է Microsoft-ի օգնության էջերում՝ [Microsoft Edge extensions](https://docs.microsoft.com/en-us/microsoft-edge/extensions) և [Using ManifoldJS to create extension AppX packages](https://docs.microsoft.com/en-us/microsoft-edge/extensions/guides/packaging/using-manifoldjs-to-package-extensions):

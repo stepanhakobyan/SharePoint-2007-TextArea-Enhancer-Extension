@@ -1,0 +1,12 @@
+.nicEdit-main {
+    background-color: white;
+    padding: 1px;
+}
+
+/*#onetIDListForm {
+    width: 100%;
+}*/
+
+textarea.ms-long {
+    width: 800px;
+}

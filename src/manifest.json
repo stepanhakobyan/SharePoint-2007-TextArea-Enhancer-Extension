@@ -1,0 +1,55 @@
+{
+  "name": "SharePoint 2007 TextArea Enhancer",
+  "manifest_version": 2,
+  "version": "1.2.0",
+  "description": "SharePoint 2007 TextArea Enhancer",
+  "author": "sts",
+  "icons": {
+    "16": "icons/Microsoft-SharePoint-2013-icon_16.png",
+    "20": "icons/Microsoft-SharePoint-2013-icon_16.png",
+    "24": "icons/Microsoft-SharePoint-2013-icon_24.png",
+    "32": "icons/Microsoft-SharePoint-2013-icon_32.png",
+    "48": "icons/Microsoft-SharePoint-2013-icon_48.png",
+    "64": "icons/Microsoft-SharePoint-2013-icon_64.png",
+    "72": "icons/Microsoft-SharePoint-2013-icon_72.png",
+    "96": "icons/Microsoft-SharePoint-2013-icon_96.png",
+    "128": "icons/Microsoft-SharePoint-2013-icon_128.png",
+    "256": "icons/Microsoft-SharePoint-2013-icon_256.png"
+  },
+  "browser_action": {
+    "default_icon": {
+      "16": "icons/Microsoft-SharePoint-2013-icon_16.png",
+      "20": "icons/Microsoft-SharePoint-2013-icon_16.png",
+      "24": "icons/Microsoft-SharePoint-2013-icon_24.png",
+      "32": "icons/Microsoft-SharePoint-2013-icon_32.png",
+      "48": "icons/Microsoft-SharePoint-2013-icon_48.png",
+      "64": "icons/Microsoft-SharePoint-2013-icon_64.png",
+      "72": "icons/Microsoft-SharePoint-2013-icon_72.png",
+      "96": "icons/Microsoft-SharePoint-2013-icon_96.png",
+      "128": "icons/Microsoft-SharePoint-2013-icon_128.png",
+      "256": "icons/Microsoft-SharePoint-2013-icon_256.png"
+    },
+    "default_title": "SharePoint 2007 TextArea Enhancer",
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "http://spserver/Lists/*",
+    "tabs",
+    "storage",
+    "activeTab"
+  ],
+  "minimum_edge_version": "37.14316.1000.0",
+  "background": {
+    "page": "background.html",
+    "persistent": true
+  },
+  "content_scripts": [
+    {
+      "matches": [ "http://spserver/Lists/*" ],
+      "css": [ "css/light.css" ],
+      "js": [],
+      "run_at": "document_end"
+    }
+  ],
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+}
