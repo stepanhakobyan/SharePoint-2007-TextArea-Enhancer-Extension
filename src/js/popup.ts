@@ -1,4 +1,6 @@
-﻿window.addEventListener<"load">("load", (_ev) => {
+﻿import * as redeclared from "./redeclare.js";
+
+window.addEventListener<"load">("load", (_ev) => {
     let save = document.getElementById("save0") as HTMLButtonElement;
     save.addEventListener<"click">("click", (_ev) => {
         browser.tabs.query({ currentWindow: true, active: true }, (tabs) => {

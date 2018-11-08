@@ -1,26 +1,26 @@
-var HALF_MINUTE = 30 * 1000;
-setInterval(function (args) {
-    browser.tabs.query({ currentWindow: true, active: true }, function (tabs) {
+const HALF_MINUTE = 30 * 1000;
+setInterval((args) => {
+    browser.tabs.query({ currentWindow: true, active: true }, (tabs) => {
         if (tabs && tabs.length == 1) {
             if (tabs[0].url.indexOf("spserver") > 0) {
-                browser.tabs.sendMessage(tabs[0].id, { text: 'getReviewDetails' }, function (reviewText) {
-                    var prevText = window.localStorage.getItem("previousReviewText1");
+                browser.tabs.sendMessage(tabs[0].id, { text: 'getReviewDetails' }, (reviewText) => {
+                    let prevText = window.localStorage.getItem("previousReviewText1");
                     if (prevText == reviewText) {
                         //no change detected
                         return;
                     }
                     console.log(reviewText);
-                    for (var i = 4; i > 0; i--) {
-                        var prevText_1 = window.localStorage.getItem("previousReviewText" + i);
-                        var prevTime = window.localStorage.getItem("previousReviewTime" + i);
-                        if (prevText_1) {
-                            window.localStorage.setItem("previousReviewText" + (i + 1), prevText_1);
-                            window.localStorage.setItem("previousReviewTime" + (i + 1), prevTime);
+                    for (let i = 4; i > 0; i--) {
+                        let prevText = window.localStorage.getItem(`previousReviewText${i}`);
+                        let prevTime = window.localStorage.getItem(`previousReviewTime${i}`);
+                        if (prevText) {
+                            window.localStorage.setItem(`previousReviewText${i + 1}`, prevText);
+                            window.localStorage.setItem(`previousReviewTime${i + 1}`, prevTime);
                         }
                     }
-                    var now = new Date();
-                    window.localStorage.setItem("previousReviewText1", reviewText);
-                    window.localStorage.setItem("previousReviewTime1", now.toLocaleString("en-GB"));
+                    let now = new Date();
+                    window.localStorage.setItem(`previousReviewText1`, reviewText);
+                    window.localStorage.setItem(`previousReviewTime1`, now.toLocaleString("en-GB"));
                 });
             }
             else {
@@ -32,8 +32,7 @@ setInterval(function (args) {
         }
     });
 }, HALF_MINUTE);
-//var prob = 1;
-browser.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
+browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     //console.log("tabId - changeInfo - tab 1");
     //console.log(tabId);
     //console.log(changeInfo);
@@ -44,31 +43,28 @@ browser.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
             console.log(tabId);
             console.log(changeInfo);
             console.log(tab);
-            //if (prob < 5) {
-            //    browser.tabs.sendMessage(tabId, { text: 'checkSharePoint' },
-            //        (result: boolean) => {
-            //            console.log(result);
-            //            if (!result) {
-            //                browser.tabs.executeScript(null, {
-            //                    file: "js/nicEdit-latest.js"
-            //                });
-            //                browser.tabs.executeScript(null, {
-            //                    file: "js/nicEditInit.js"
-            //                });
-            //                //prob++;
-            //                //browser.tabs.sendMessage(tabId, { text: 'checkSharePoint' },
-            //                //    (result: boolean) => {
-            //                //        console.log(result);
-            //                //    });
-            //            }
-            //            prob++;
-            //        });
-            //}
-            browser.tabs.executeScript(null, {
-                file: "js/nicEdit-latest.js"
-            });
-            browser.tabs.executeScript(null, {
-                file: "js/content.js"
+            browser.tabs.insertCSS({
+                file: "css/light.css"
+            }, () => {
+                console.log("inserted light.css");
+                browser.tabs.executeScript({
+                    file: "js/nicEdit-latest.js",
+                }, (res1) => {
+                    console.log("inserted nicEdit-latest.js");
+                    console.log(res1);
+                    browser.tabs.executeScript({
+                        file: "js/redeclare.js"
+                    }, (res2) => {
+                        console.log("inserted contentRedeclare.js");
+                        console.log(res2);
+                        browser.tabs.executeScript({
+                            file: "js/content.js"
+                        }, (res3) => {
+                            console.log("inserted content.js");
+                            console.log(res3);
+                        });
+                    });
+                });
             });
         }
     }

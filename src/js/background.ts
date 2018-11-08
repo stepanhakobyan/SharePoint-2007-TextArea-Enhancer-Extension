@@ -1,3 +1,5 @@
+import * as redeclared from "./redeclare.js";
+
 const HALF_MINUTE: number = 30 * 1000;
 setInterval((args) => {
     browser.tabs.query({ currentWindow: true, active: true }, (tabs) => {
@@ -33,8 +35,6 @@ setInterval((args) => {
     });
 }, HALF_MINUTE);
 
-//var prob = 1;
-
 browser.tabs.onUpdated.addListener((tabId, changeInfo, tab): void => {
     //console.log("tabId - changeInfo - tab 1");
     //console.log(tabId);
@@ -46,39 +46,33 @@ browser.tabs.onUpdated.addListener((tabId, changeInfo, tab): void => {
             console.log(tabId);
             console.log(changeInfo);
             console.log(tab);
-            //if (prob < 5) {
-            //    browser.tabs.sendMessage(tabId, { text: 'checkSharePoint' },
-            //        (result: boolean) => {
-            //            console.log(result);
-            //            if (!result) {
-            //                browser.tabs.executeScript(null, {
-            //                    file: "js/nicEdit-latest.js"
-            //                });
-            //                browser.tabs.executeScript(null, {
-            //                    file: "js/nicEditInit.js"
-            //                });
-            //                //prob++;
-            //                //browser.tabs.sendMessage(tabId, { text: 'checkSharePoint' },
-            //                //    (result: boolean) => {
-            //                //        console.log(result);
-                                    
-            //                //    });
-            //            }
-            //            prob++;
-            //        });
-            //}
 
-
-            browser.tabs.executeScript(null, {
-                file: "js/nicEdit-latest.js"
+            browser.tabs.insertCSS({
+                file: "css/light.css"
+            }, () => {
+                console.log("inserted light.css");
+                browser.tabs.executeScript({
+                    file: "js/nicEdit-latest.js",
+                }, (res1) => {
+                    console.log("inserted nicEdit-latest.js");
+                    console.log(res1);
+                    browser.tabs.executeScript({
+                        file: "js/redeclare.js"
+                    }, (res2) => {
+                        console.log("inserted contentRedeclare.js");
+                        console.log(res2);
+                        browser.tabs.executeScript({
+                            file: "js/content.js"
+                        }, (res3) => {
+                            console.log("inserted content.js");
+                            console.log(res3);
+                        });
+                    });
+                });
             });
-            browser.tabs.executeScript(null, {
-                file: "js/content.js"
-            });
-
         }
     }
-    
+
 });
 
 function startsWith(source: string, start: string): boolean {

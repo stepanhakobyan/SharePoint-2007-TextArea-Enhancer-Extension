@@ -35,7 +35,7 @@ Microsoft Edge-ի համար extension սարքելու համար ահագին 
 Name="SharePoint2007TextAreaEnhancer"   
 Publisher="CN=STS, O=STS, C=AM"
 <PublisherDisplayName>STS publisher</PublisherDisplayName>
-<TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.14393.0" MaxVersionTested="10.0.14393.0" />
+<TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.16299.0" MaxVersionTested="10.0.16299.0" />
 ```
 
 #### (քայլ 3) ջնջել ավելորդ ֆայլերը Extension-ի ֆայլերի միջից

@@ -1,7 +1,7 @@
 {
   "name": "SharePoint 2007 TextArea Enhancer",
   "manifest_version": 2,
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "SharePoint 2007 TextArea Enhancer",
   "author": "sts",
   "icons": {
@@ -42,13 +42,5 @@
     "page": "background.html",
     "persistent": true
   },
-  "content_scripts": [
-    {
-      "matches": [ "http://spserver/Lists/*" ],
-      "css": [ "css/light.css" ],
-      "js": [ "js/redeclare.js" ],
-      "run_at": "document_end"
-    }
-  ],
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
 }
