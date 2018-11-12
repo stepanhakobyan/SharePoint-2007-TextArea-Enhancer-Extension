@@ -1,18 +1,26 @@
+import * as redeclared from "./redeclare.js";
+window.browser = redeclared.default;
 window.addEventListener("load", (_ev) => {
     let save = document.getElementById("save0");
     save.addEventListener("click", (_ev) => {
         browser.tabs.query({ currentWindow: true, active: true }, (tabs) => {
             if (tabs && tabs.length == 1) {
                 if (tabs[0].url.indexOf("spserver") > 0) {
-                    browser.tabs.sendMessage(tabs[0].id, { text: 'getReviewDetails' }, function (reviewText) {
-                        console.log(reviewText);
-                        var now = new Date();
-                        window.localStorage.setItem("previousReviewText0", reviewText);
-                        window.localStorage.setItem("previousReviewTime0", now.toLocaleString("en-GB"));
-                        let textArea = document.getElementById("d0");
-                        let timeSpan = document.getElementById("t0");
-                        textArea.textContent = reviewText;
-                        timeSpan.textContent = now.toLocaleString("en-GB");
+                    browser.tabs.sendMessage(tabs[0].id, { text: 'getReviewDetails' }, (reviewText) => {
+                        if (reviewText === undefined) {
+                            //Այս դեպքը երբեմն առաջանում է Edge-ի մեջ, երբ Tab-ը պոկած է և առանձին պատուհան է սարքած
+                            return;
+                        }
+                        else {
+                            console.log(reviewText);
+                            let now = new Date();
+                            window.localStorage.setItem("previousReviewText0", reviewText);
+                            window.localStorage.setItem("previousReviewTime0", now.toLocaleString("en-GB"));
+                            let textArea = document.getElementById("d0");
+                            let timeSpan = document.getElementById("t0");
+                            textArea.textContent = reviewText;
+                            timeSpan.textContent = now.toLocaleString("en-GB");
+                        }
                     });
                 }
                 else {

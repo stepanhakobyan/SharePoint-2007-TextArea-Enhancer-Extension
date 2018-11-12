@@ -1,3 +1,6 @@
+if (!window.browser) {
+    window.browser = window.chrome;
+}
 console.log("content.js");
 // Listen for messages
 browser.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
@@ -50,7 +53,10 @@ function addNicEdit2() {
         console.log("test nicedit");
         console.log(nicEdit);
         if (!nicEdit) {
-            new nicEditor().panelInstance(reviewArea.id);
+            let params = {};
+            if (window.nicEditorIconsPath)
+                params.iconsPath = window.nicEditorIconsPath;
+            new nicEditor(params).panelInstance(reviewArea.id);
             console.log("addNicEdit2 succeeded");
             addMutationObserver2();
         }

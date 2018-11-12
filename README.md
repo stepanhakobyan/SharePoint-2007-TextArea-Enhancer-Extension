@@ -1,7 +1,9 @@
 # SharePoint 2007 TextArea Enhancer Extension
-Այս պրոյեկտով սարքում եմ Microsoft Edge-ի համար Extension, որը ՀԾ-ի spserver-ում TextArea դաշտերի փոխարեն տեղադրում է NicEdit խմբագրիչը:
+Այս պրոյեկտով սարքում եմ Extension, որը ՀԾ-ի spserver-ում TextArea դաշտերի փոխարեն տեղադրում է NicEdit խմբագրիչը:
+Եվ միացնում է խմբագրիչի պարունակության պահպանման և վերականգնման հնարավորություն։ 
+Իրականացված է նաև ինքնապահպանման հնարավորությունը (ամեն 30վրկ)։
 
-Միակ chrome անունով branch-ի մեջ կատարված են փոփոխություններ, որպեսզի Extension-ը աշխատի Google Chrome-ի մեջ:
+Պրոյեկտը միարժամանակ դառնում է Microsoft Edge-ի, Google Chrome-ի, Mozilla Firefox-ի ընլայնում։
 
 ### Առանց Extension հարուստ խմբագրիչ չկա
 ![without Extension](before.png)
@@ -10,7 +12,7 @@
 ![installed Extension](after.png)
 
 ## Extension-ի հավաքելու քայլերը
-Google Chrome-ի համար հարկավոր է միայն zip սարքել `src` ծրարի պարունակությունը։
+Chrome-ի և Firefox-ի համար հարկավոր է միայն zip սարքել `src` ծրարի պարունակությունը։
 Իսկ Microsoft Edge-ի համար պետք է հավաքել հատուկ AppX ֆայլ, դրա մասին ահագին գրված է Microsoft-ի օգնության էջերում՝ [Microsoft Edge extensions](https://docs.microsoft.com/en-us/microsoft-edge/extensions) և [Using ManifoldJS to create extension AppX packages](https://docs.microsoft.com/en-us/microsoft-edge/extensions/guides/packaging/using-manifoldjs-to-package-extensions):
 Թեև հիշելու համար կգրեմ մանրամասն հրամաններով։
 

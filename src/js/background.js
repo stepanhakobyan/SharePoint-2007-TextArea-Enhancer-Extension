@@ -1,9 +1,15 @@
+import * as redeclared from "./redeclare.js";
+window.browser = redeclared.default;
 const HALF_MINUTE = 30 * 1000;
 setInterval((args) => {
     browser.tabs.query({ currentWindow: true, active: true }, (tabs) => {
         if (tabs && tabs.length == 1) {
             if (tabs[0].url.indexOf("spserver") > 0) {
                 browser.tabs.sendMessage(tabs[0].id, { text: 'getReviewDetails' }, (reviewText) => {
+                    if (reviewText === undefined) {
+                        //Այս դեպքը երբեմն առաջանում է Edge-ի մեջ, երբ Tab-ը պոկած է և առանձին պատուհան է սարքած
+                        return;
+                    }
                     let prevText = window.localStorage.getItem("previousReviewText1");
                     if (prevText == reviewText) {
                         //no change detected
@@ -33,37 +39,40 @@ setInterval((args) => {
     });
 }, HALF_MINUTE);
 browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-    //console.log("tabId - changeInfo - tab 1");
-    //console.log(tabId);
-    //console.log(changeInfo);
-    //console.log(tab);
     if (changeInfo.status === "complete") {
         if (startsWith(tab.url, "http://spserver/Lists/")) {
             console.log("tabId - changeInfo - tab");
             console.log(tabId);
             console.log(changeInfo);
             console.log(tab);
-            browser.tabs.insertCSS({
-                file: "css/light.css"
+            let iconsPath = browser.extension.getURL("/icons/nicEditIcons-latest.gif");
+            browser.tabs.insertCSS(tabId, {
+                file: "/css/light.css"
             }, () => {
                 console.log("inserted light.css");
-                browser.tabs.executeScript({
-                    file: "js/nicEdit-latest.js",
+                browser.tabs.executeScript(tabId, {
+                    file: "/js/nicEdit-latest.js",
                 }, (res1) => {
-                    console.log("inserted nicEdit-latest.js");
-                    console.log(res1);
-                    browser.tabs.executeScript({
-                        file: "js/redeclare.js"
-                    }, (res2) => {
-                        console.log("inserted contentRedeclare.js");
-                        console.log(res2);
-                        browser.tabs.executeScript({
-                            file: "js/content.js"
-                        }, (res3) => {
-                            console.log("inserted content.js");
-                            console.log(res3);
+                    if (typeof res1 === "undefined") {
+                        //Այս դեպքը երբեմն առաջանում է Edge-ի մեջ, երբ Tab-ը պոկած է և առանձին պատուհան է սարքած
+                        console.error("Failed to properly insert nicEdit-latest.js");
+                    }
+                    else {
+                        console.log("inserted nicEdit-latest.js");
+                        console.log(res1);
+                        browser.tabs.executeScript(tabId, {
+                            code: "window.nicEditorIconsPath = '" + iconsPath + "';"
+                        }, (res2) => {
+                            console.log("inserted nicEditorIconsPath");
+                            console.log(res2);
+                            browser.tabs.executeScript(tabId, {
+                                file: "/js/content.js"
+                            }, (res3) => {
+                                console.log("inserted content.js");
+                                console.log(res3);
+                            });
                         });
-                    });
+                    }
                 });
             });
         }
